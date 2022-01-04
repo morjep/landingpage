@@ -11,31 +11,29 @@
  *
  * JS Standard: ESlint
  *
-*/
+ */
 
 /**
  * Comments should be present at the beginning of each procedure and class.
  * Great to have comments before crucial code sections within the procedure.
-*/
+ */
 
 /**
  * Define Global Variables
  *
-*/
-
+ */
 
 /**
  * End Global Variables
  * Start Helper Functions
  *
-*/
-
+ */
 
 /**
  * End Helper Functions
  * Begin Main Functions
  *
-*/
+ */
 
 // build the nav
 
@@ -47,35 +45,53 @@
  * End Main Functions
  * Begin Events
  *
-*/
+ */
 
-// Build menu
-function buildNavBarMenu(){
-    const navSections = document.querySelectorAll('[id^="section"]');
-    const fragment = new DocumentFragment();
-    for (let navSection of navSections){
-        const li = document.createElement('li');
-        li.innerText = navSection.dataset.nav;
-        li.classList.add('menu__link');
-        li.addEventListener('click', function(){
-            document.getElementById(navSection.id).scrollIntoView({behavior: 'smooth'});
-            // set active class on section - remove active from previous section - global var that holds active section?
-
-        });
-        fragment.appendChild(li);
+// Create observer that sets active class when section comes into view
+let observer = new IntersectionObserver(
+  function (entries) {
+    if (entries[0].isIntersecting === true) {
+      console.log("Element has just become visible in screen");
+      let currentlyActive = document.querySelector(".section-in-view");
+      currentlyActive.classList.toggle("section-in-view");
+      entries[0].target.classList.toggle("section-in-view");
+      console.log(entries[0].target);
     }
-    const list = document.querySelector('#navbar__list');
-    list.appendChild(fragment);
+  },
+  { threshold: [0.51] }
+);
+
+// Build navigation bar items, add menu event listeners and  and menu items
+function buildNavigation() {
+  const navSections = document.querySelectorAll('[id^="section"]');
+  const fragment = new DocumentFragment();
+
+  for (let navSection of navSections) {
+    // Create new list item, add the name from the dataset nav and add the class for styling
+    const li = document.createElement("li");
+    li.innerHTML = navSection.dataset.nav;
+    li.classList.add("menu__link");
+
+    // Add listener for click on navbar item (just added)
+    li.addEventListener("click", function () {
+      document
+        .getElementById(navSection.id)
+        .scrollIntoView({ behavior: "smooth" });
+    });
+
+    // Append the list item to the fragment
+    fragment.appendChild(li);
+
+    // Add observer for section
+    const target = document.getElementById(navSection.id)
+    observer.observe(target);
+  }
+  // Append the fragment to the navbar list
+  const list = document.querySelector("#navbar__list");
+  list.appendChild(fragment);
 }
 
-// Scroll to section on link click
-
-// Set sections as active
-
-/**
- * Main function
- */
-// buildNav();
-buildNavBarMenu();
-
-// add event listeners on navbar on clicks goto section in data-goto
+document.addEventListener("DOMContentLoaded", (event) => {
+  console.log("DOM fully loaded and parsed");
+  buildNavigation();
+});
