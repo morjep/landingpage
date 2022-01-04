@@ -22,7 +22,7 @@
  * Define Global Variables
  *
 */
-let docNavigator = [];
+
 
 /**
  * End Global Variables
@@ -56,15 +56,17 @@ function gotoID(idText){
 // Build menu
 function buildNavBarMenu(){
     const navSections = document.querySelectorAll('[id^="section"]');
-    let fragment = new DocumentFragment();
-    for (navSection of navSections){
-        let li = document.createElement('li');
+    const fragment = new DocumentFragment();
+    for (let navSection of navSections){
+        const li = document.createElement('li');
         li.innerText = navSection.dataset.nav;
         li.classList.add('menu__link');
-        li.setAttribute('data-goto', navSection.id);
+        li.addEventListener('click', function(){
+            document.getElementById(navSection.id).scrollIntoView({behavior: 'smooth'});
+        });
         fragment.appendChild(li);
     }
-    let list = document.querySelector('#navbar__list');
+    const list = document.querySelector('#navbar__list');
     list.appendChild(fragment);
 }
 
@@ -77,9 +79,5 @@ function buildNavBarMenu(){
  */
 // buildNav();
 buildNavBarMenu();
-gotoID('section3');
 
-// GO TO ID
-//document.getElementById("jump_to_this_location").scrollIntoView({behavior: 'smooth'});
-// or
-// window.location.hash = "jump_to_this_location";
+// add event listeners on navbar on clicks goto section in data-goto
