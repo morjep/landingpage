@@ -42,10 +42,6 @@
 // Add class 'active' to section when near top of viewport
 
 // Scroll to anchor ID using scrollTO event
-function gotoID(idText){
-    document.getElementById(idText).scrollIntoView({behavior: 'smooth'});
-}
-
 
 /**
  * End Main Functions
@@ -63,6 +59,8 @@ function buildNavBarMenu(){
         li.classList.add('menu__link');
         li.addEventListener('click', function(){
             document.getElementById(navSection.id).scrollIntoView({behavior: 'smooth'});
+            // set active class on section - remove active from previous section - global var that holds active section?
+
         });
         fragment.appendChild(li);
     }
