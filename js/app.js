@@ -22,14 +22,13 @@
  * Define Global Variables
  *
 */
-
+let docNavigator = [];
 
 /**
  * End Global Variables
  * Start Helper Functions
  *
 */
-
 
 
 /**
@@ -40,11 +39,12 @@
 
 // build the nav
 
-
 // Add class 'active' to section when near top of viewport
 
-
 // Scroll to anchor ID using scrollTO event
+function gotoID(idText){
+    document.getElementById(idText).scrollIntoView({behavior: 'smooth'});
+}
 
 
 /**
@@ -54,7 +54,32 @@
 */
 
 // Build menu
+function buildNavBarMenu(){
+    const navSections = document.querySelectorAll('[id^="section"]');
+    let fragment = new DocumentFragment();
+    for (navSection of navSections){
+        let li = document.createElement('li');
+        li.innerText = navSection.dataset.nav;
+        li.classList.add('menu__link');
+        li.setAttribute('data-goto', navSection.id);
+        fragment.appendChild(li);
+    }
+    let list = document.querySelector('#navbar__list');
+    list.appendChild(fragment);
+}
 
 // Scroll to section on link click
 
 // Set sections as active
+
+/**
+ * Main function
+ */
+// buildNav();
+buildNavBarMenu();
+gotoID('section3');
+
+// GO TO ID
+//document.getElementById("jump_to_this_location").scrollIntoView({behavior: 'smooth'});
+// or
+// window.location.hash = "jump_to_this_location";
