@@ -49,7 +49,7 @@
 
 // Create observer that sets active class when section comes into view
 let observer = new IntersectionObserver(
-  function (entries) {
+  (entries) => {
     if (entries[0].isIntersecting === true) {
       console.log("Element has just become visible in screen");
       let currentlyActive = document.querySelector(".section-in-view");
@@ -61,8 +61,8 @@ let observer = new IntersectionObserver(
   { threshold: [0.51] }
 );
 
-// Build navigation bar items, add menu event listeners and  and menu items
-function buildNavigation() {
+// Build navigation bar items, add menu event listeners and add observers
+let buildNavigation = () => {
   const navSections = document.querySelectorAll('[id^="section"]');
   const fragment = new DocumentFragment();
 
@@ -73,7 +73,7 @@ function buildNavigation() {
     li.classList.add("menu__link");
 
     // Add listener for click on navbar item (just added)
-    li.addEventListener("click", function () {
+    li.addEventListener("click", () => {
       document
         .getElementById(navSection.id)
         .scrollIntoView({ behavior: "smooth" });
@@ -91,7 +91,8 @@ function buildNavigation() {
   list.appendChild(fragment);
 }
 
-document.addEventListener("DOMContentLoaded", (event) => {
+// Wait for DOM content to be fully loaded
+document.addEventListener("DOMContentLoaded", () => {
   console.log("DOM fully loaded and parsed");
   buildNavigation();
 });
