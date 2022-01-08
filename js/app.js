@@ -13,39 +13,6 @@
  *
  */
 
-/**
- * Comments should be present at the beginning of each procedure and class.
- * Great to have comments before crucial code sections within the procedure.
- */
-
-/**
- * Define Global Variables
- *
- */
-
-/**
- * End Global Variables
- * Start Helper Functions
- *
- */
-
-/**
- * End Helper Functions
- * Begin Main Functions
- *
- */
-
-// build the nav
-
-// Add class 'active' to section when near top of viewport
-
-// Scroll to anchor ID using scrollTO event
-
-/**
- * End Main Functions
- * Begin Events
- *
- */
 
 // Create observer that sets active class when section comes into view
 let observer = new IntersectionObserver(
@@ -83,13 +50,13 @@ let buildNavigation = () => {
     fragment.appendChild(li);
 
     // Add observer for section
-    const target = document.getElementById(navSection.id)
+    const target = document.getElementById(navSection.id);
     observer.observe(target);
   }
   // Append the fragment to the navbar list
   const list = document.querySelector("#navbar__list");
   list.appendChild(fragment);
-}
+};
 
 // Wait for DOM content to be fully loaded
 document.addEventListener("DOMContentLoaded", () => {
