@@ -13,16 +13,15 @@
  *
  */
 
-
 // Create observer that sets active class when section comes into view
 let observer = new IntersectionObserver(
   (entries) => {
     if (entries[0].isIntersecting === true) {
-      console.log("Element has just become visible in screen");
+      // console.log("Element has just become visible in screen");
       let currentlyActive = document.querySelector(".section-in-view");
       currentlyActive.classList.toggle("section-in-view");
       entries[0].target.classList.toggle("section-in-view");
-      console.log(entries[0].target);
+      // console.log(entries[0].target);
     }
   },
   { threshold: [0.51] }
@@ -58,8 +57,21 @@ let buildNavigation = () => {
   list.appendChild(fragment);
 };
 
+/* When the user scrolls down, hide the navbar. When the user scrolls up, show the navbar */
+/* Credit: w3schools */
+let prevScrollpos = window.pageYOffset;
+window.onscroll = () => {
+  let currentScrollPos = window.pageYOffset;
+  if (prevScrollpos > currentScrollPos) {
+    document.getElementById("navbar").style.top = "0";
+  } else {
+    document.getElementById("navbar").style.top = "-150px";
+  }
+  prevScrollpos = currentScrollPos;
+};
+
 // Wait for DOM content to be fully loaded
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("DOM fully loaded and parsed");
+  // console.log("DOM fully loaded and parsed");
   buildNavigation();
 });
