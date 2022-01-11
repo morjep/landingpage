@@ -18,10 +18,19 @@ let observer = new IntersectionObserver(
   (entries) => {
     if (entries[0].isIntersecting === true) {
       // console.log("Element has just become visible in screen");
+
+      // Toggle the currently active section and set the new in view section to active
       let currentlyActive = document.querySelector(".section-in-view");
       currentlyActive.classList.toggle("section-in-view");
       entries[0].target.classList.toggle("section-in-view");
-      // console.log(entries[0].target);
+
+      // Toggle the currently active menu item
+      currentlyActive = document.querySelector(".menu-item-in-view");
+      currentlyActive.classList.toggle("menu-item-in-view");
+
+      // Use the dataset name of the section to match to the menu item ID
+      let menuItem = document.getElementById(entries[0].target.dataset.nav);
+      menuItem.classList.toggle("menu-item-in-view");
     }
   },
   { threshold: [0.51] }
@@ -31,13 +40,17 @@ let observer = new IntersectionObserver(
 let buildNavigation = () => {
   const navSections = document.querySelectorAll('[id^="section"]');
   const fragment = new DocumentFragment();
-
+  let setFirstMenuItem = true;
   for (let navSection of navSections) {
     // Create new list item, add the name from the dataset nav and add the class for styling
     const li = document.createElement("li");
     li.innerHTML = navSection.dataset.nav;
     li.classList.add("menu__link");
-
+    li.setAttribute("id",navSection.dataset.nav);
+    if (setFirstMenuItem){
+      li.classList.add("menu-item-in-view");
+      setFirstMenuItem = false;
+    }
     // Add listener for click on navbar item (just added)
     li.addEventListener("click", () => {
       document
