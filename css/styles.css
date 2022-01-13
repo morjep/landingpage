@@ -99,10 +99,12 @@ section {
   border-radius: 20px;
 }
 
-.navbar__menu .menu__link:hover {
-  background: #333;
-  color: #fff;
-  transition: ease 0.3s all;
+@media (hover: hover) {
+  .navbar__menu .menu__link:hover {
+    background: #333;
+    color: #fff;
+    transition: ease 0.3s all;
+  }
 }
 
 @media only screen and (min-width: 800px) and (max-width: 1200px) {
